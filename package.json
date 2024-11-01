@@ -1,0 +1,16 @@
+{
+	"name": "csv2lang",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "node cli.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"csv-parser": "^3.0.0"
+	}
+}
