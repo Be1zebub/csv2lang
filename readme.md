@@ -5,6 +5,8 @@ This is a simple CSV to Lua converter for this [awesome localization library](ht
 The main thing here - it's a super quick way to add translations to your Garry's Mod addons.  
 No more manual translation work - just throw everything into Google Sheets, export to CSV, convert it, and boom - you've got your Lua files!
 
+![preview](preview.png)
+
 ## 🚀 How to Use
 
 1. Grab the latest `csv2lang.exe` from the [releases page](https://github.com/Be1zebub/csv2lang/releases)
