@@ -7,9 +7,9 @@ No more manual translation work - just throw everything into Google Sheets, expo
 
 ## 🚀 How to Use
 
-1. Grab the latest `cli.exe` from the [releases page](https://github.com/Be1zebub/csv2lang/releases)
+1. Grab the latest `csv2lang.exe` from the [releases page](https://github.com/Be1zebub/csv2lang/releases)
 2. Make a translation file in google sheets & export it to CSV
-3. Drop your CSV file onto the `cli.exe` you just downloaded
+3. Drop your CSV file onto the `csv2lang.exe` you just downloaded
 4. Done! You'll find a `result_{filename}` folder next to your CSV with all the Lua goodies
 
 ## 📝 CSV File Requirements
