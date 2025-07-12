@@ -7,9 +7,9 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     permissions:
-      contents: write # needed for release uploads
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
@@ -26,18 +26,28 @@ jobs:
       - name: Build executable
         run: npm run build
 
+      - name: Verify build output
+        run: |
+          ls -la dist/
+          if [ ! -f "dist/csv2lang.exe" ]; then
+            echo "Error: dist/csv2lang.exe not found!"
+            exit 1
+          fi
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: csv2lang-win-x64
-          path: dist/cli.exe
-          compression-level: 9 # maximum compression
+          path: dist/csv2lang.exe
+          compression-level: 9
+          if-no-files-found: error
 
       - name: Upload to release
         if: github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/cli.exe
+          files: dist/csv2lang.exe
           tag_name: v${{ github.run_number }}
           name: Release v${{ github.run_number }}
           generate_release_notes: true
+          fail_on_unmatched_files: true
