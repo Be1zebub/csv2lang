@@ -3,6 +3,9 @@ name: Build Executable
 on:
   push:
     branches: [master]
+    paths-ignore:
+      - "*.md"
+      - "*.csv"
   workflow_dispatch:
 
 jobs:
