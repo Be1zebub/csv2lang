@@ -1,16 +1,27 @@
 {
 	"name": "csv2lang",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "cli.js",
+	"bin": "cli.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "node cli.js"
+		"build": "pkg .",
+		"start": "node cli.js"
+	},
+	"pkg": {
+		"targets": [
+			"node16-win-x64"
+		],
+		"outputPath": "dist"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
-	"description": "",
+	"description": "CSV to Lua language file converter with drag & drop support",
 	"dependencies": {
 		"csv-parser": "^3.0.0"
+	},
+	"devDependencies": {
+		"pkg": "^5.8.1"
 	}
 }
