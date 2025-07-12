@@ -1,5 +1,5 @@
 converter util, csv > lang lib files
-lang lib: https://github.com/Be1zebub/Small-GLua-Things/blob/master/lang.lua
+lang lib: https://github.com/Be1zebub/Small-GLua-Things/blob/master/libs/lang.lua
 
 first: install deps (run npm install)
 
