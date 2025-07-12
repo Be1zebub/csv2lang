@@ -2,16 +2,29 @@ const fs = require("fs")
 const path = require("path")
 const csv = require("csv-parser")
 
+function pauseAndExit(code = 0) {
+	process.stdout.write("Press any key to exit...\n")
+	process.stdin.setRawMode(true)
+	process.stdin.resume()
+
+	const buffer = Buffer.alloc(1)
+	fs.readSync(process.stdin.fd, buffer, 0, 1, null)
+
+	process.stdin.setRawMode(false)
+	process.stdin.pause()
+	process.exit(code)
+}
+
 // Get the CSV file path from command line or drag & drop
 const csvPath = process.argv[2] || process.argv[1]
 if (!csvPath || !fs.existsSync(csvPath)) {
 	console.error("File not found")
-	process.exit(1)
+	pauseAndExit(1)
 }
 
 if (path.extname(csvPath).toLowerCase() !== ".csv") {
 	console.error("File should have .csv extension")
-	process.exit(1)
+	pauseAndExit(1)
 }
 
 const csvPath2 = path.parse(csvPath)
@@ -37,26 +50,29 @@ const escapeLua = (str) =>
 
 const results = []
 const languages = new Set()
-let isFirstRow = true
+let rowIndex = 0
 
 fs.createReadStream(csvPath)
 	.pipe(csv())
 	.on("data", (data) => {
-		if (isFirstRow) {
+		rowIndex++
+
+		if (rowIndex === 1) {
 			if (!data._uid) {
 				console.error('CSV should contain "_uid" column')
-				process.exit(1)
+				pauseAndExit(1)
 			}
 			if (Object.keys(data).length < 2) {
 				console.error("CSV should contain at least one language")
-				process.exit(1)
+				pauseAndExit(1)
 			}
-			isFirstRow = false
 		}
 
 		if (!data._uid || data._uid.trim() === "") {
-			console.error("Found empty row or row without _uid")
-			process.exit(1)
+			console.error(
+				`Found invalid row #${rowIndex} (without _uid or empty localization)`
+			)
+			pauseAndExit(1)
 		}
 
 		results.push(data)
@@ -65,7 +81,7 @@ fs.createReadStream(csvPath)
 	.on("end", () => {
 		if (results.length === 0) {
 			console.error("CSV file is empty")
-			process.exit(1)
+			pauseAndExit(1)
 		}
 
 		languages.forEach((lang) => {
@@ -77,7 +93,7 @@ fs.createReadStream(csvPath)
 					`Found empty translations for language "${lang}":`,
 					invalidRows.map((r) => r._uid).join(", ")
 				)
-				process.exit(1)
+				pauseAndExit(1)
 			}
 
 			fs.writeFileSync(
@@ -97,9 +113,9 @@ fs.createReadStream(csvPath)
 				.map((l) => l + ".lua")
 				.join(", ")}`
 		)
-		setTimeout(() => process.exit(0), 3000)
+		pauseAndExit(0)
 	})
 	.on("error", (error) => {
 		console.error("Error reading CSV:", error.message)
-		process.exit(1)
+		pauseAndExit(1)
 	})
