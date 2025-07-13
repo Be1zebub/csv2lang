@@ -14,6 +14,8 @@ No more manual translation work - just throw everything into Google Sheets, expo
 3. Drop your CSV file onto the `csv2lang.exe` you just downloaded
 4. Done! You'll find a `result_{filename}` folder next to your CSV with all the Lua goodies
 
+- for [lang lib api]((https://github.com/Be1zebub/Small-GLua-Things/blob/master/libs/lang.lua)), read source - its pretty short & simple lib
+
 ## 📝 CSV File Requirements
 
 Nothing fancy here:
