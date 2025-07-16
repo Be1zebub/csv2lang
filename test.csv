@@ -1,6 +1,5 @@
-_uid,en,ru
-hi,Hello {?},Привет {?}
-wyd,What you doing?,Что делаешь?
-test,"hello
-""","привет
-"""
+_uid,en,ru,_extras
+,,,"-- codeblock here"
+HELLO,"Hello world","Привет мир",
+GOODBYE,"Goodbye","До свидания",
+,,,"print("HELLO = " .. lang:Get("HELLO"))"

@@ -10,9 +10,12 @@ No more manual translation work - just throw everything into Google Sheets, expo
 ## 🚀 How to Use
 
 1. Grab the latest `csv2lang.exe` from the [releases page](https://github.com/Be1zebub/csv2lang/releases)
-2. Make a translation file in google sheets & export it to CSV
-3. Drop your CSV file onto the `csv2lang.exe` you just downloaded
-4. Done! You'll find a `result_{filename}` folder next to your CSV with all the Lua goodies
+2. You can:
+   - Convert CSV to Lua: Just drop your CSV file onto the exe
+   - Convert Lua to CSV: Drop a folder with `.lua` files onto the exe
+3. Done! You'll find:
+   - For CSV input: a `result_{filename}` folder with Lua files
+   - For Lua input: an `output.csv` file next to the folder
 
 - for [lang lib api]((https://github.com/Be1zebub/Small-GLua-Things/blob/master/libs/lang.lua)), read source - its pretty short & simple lib
 
@@ -22,17 +25,32 @@ Nothing fancy here:
 
 - Need a `_uid` column for unique IDs
 - At least one language column
-- No empty cells (all translations must be filled)
+- All rows with `_uid` must have translations (no empty cells)
+- (Optional) `_extras` column for Lua code blocks
 
 Here's what your CSV should look like:
 
 ```csv
-_uid,en,ru
-HELLO,"Hello world","Привет мир"
-GOODBYE,"Goodbye","До свидания"
+_uid,en,ru,_extras
+,,,"local lang = MyAddon.lang"
+HELLO,"Hello world","Привет мир",
+GOODBYE,"Goodbye","До свидания",
+,,,"print("HELLO = ", lang:Get("HELLO"))"
 ```
 
-🔥 **Pro tip:** Use Google Sheets for easy translation management on any device with web browser. [Check out this example](https://docs.google.com/spreadsheets/d/116h6fBrIeBlMfUOVRkacwtrYKDhN-D8oBUROAhks7HE/)
+Code blocks are rows where:
+
+- `_uid` is empty
+- `_extras` contains Lua code
+
+🔥 **Pro tips:**
+
+- Use Google Sheets for easy translation management on any device with web browser. [Check out this example](https://docs.google.com/spreadsheets/d/116h6fBrIeBlMfUOVRkacwtrYKDhN-D8oBUROAhks7HE/)
+- When converting Lua to CSV, make sure all your language files have the same structure (same number of translations and code blocks)
+- Use code blocks in `_extras` for:
+  - Comments and section headers
+  - Custom Lua code that runs between translations
+  - File initialization and cleanup code
 
 ## 💻 For Developers
 
